@@ -12,7 +12,10 @@ function App() {
   return (
     <div className="App">
       <Navigation />
-      <Route path="/" exact component={Welcome}/>
+      <Route 
+      path="/" 
+      exact 
+      render={(...props) => <Welcome name="Alan" />} />
       <Route path ="/clock" component={Clock} />
       <Route path ="/contact" component={Contact} />
     </div>
