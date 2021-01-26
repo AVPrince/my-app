@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import {Route, Switch} from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 
 import Navigation from "./components/Navigation/Navigation";
 import Welcome from './components/Welcome/Welcome'
 import Clock from './components/Clock/Clock'
 import Contact from "./components/Contact/Contact";
-import $404 from "./components/404/404";
+import NotFound from "./components/notFound/NotFound";
 
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
         <Route path ="/clock" component={Clock} />
         <Route path ="/contact" component={Contact} />
         <Route path="/welcome/:name" component={Welcome} />
-        <Route path="/404" component={$404} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   );
