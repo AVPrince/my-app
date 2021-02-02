@@ -10,7 +10,10 @@ class Jeopardy extends Component {
     this.client = new JeopardyService();
     this.state = {
       data: {},
-      score: 0
+      score: 0,
+      formData: {
+        answer:''
+      }
     }
   }
 
@@ -28,22 +31,83 @@ class Jeopardy extends Component {
     this.getNewQuestion();
   }
 
+  handleChange = (event) => {
+    // console.log(event.target.name);
+    let formData = {...this.state.formData};
+    formData[event.target.name] = event.target.value;
+    // console.log(formData);
+    this.setState({ formData });
+}
+
+handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (this.state.data.answer === this.state.formData.answer){
+      console.log('Match');
+      this.setState((state, props) => ({
+        score: state.score + state.data.value,
+        formData: {
+          answer: ''
+        }
+      }))
+    }else {
+      console.log('No Match')
+      this.setState((state, props) => ({
+        score: state.score - state.data.value,
+        formData: {
+          answer: ''
+        }
+      }))
+    }
+
+    this.getNewQuestion();
+}
+
   //display the results on the screen
   render() {
-    console.log(this.state.data)
-    if(this.state.data.id){
+    
+    console.log(this.state.data);
+    if (this.state.data.id) {
       return (
         <div>
-          <label>{this.state.data.category.title}</label>
-          <p>{this.state.data.question}</p>
-          <br />
-          <b>{this.state.data.value}</b>
+          <div>
+            <label><b>Category:</b></label>
+            {this.state.data.category.title}
+          </div>
+
+          <div>
+            <label><b>Question:</b></label>
+            {this.state.data.question}
+          </div>
+
+          <div>
+            <label><b>Point Value: </b></label>
+            {this.state.data.value}
+          </div>
+
+          <div className="Game">
+            <label><b>Score: </b></label>
+            {this.state.score}
+          </div>
+
+              <form onSubmit={this.handleSubmit}>
+                <div>
+                  <label htmlFor="answer">Answer</label>
+                  <input 
+                  type="text" 
+                  name="answer" 
+                  value={this.state.formData.answer} 
+                  onChange={this.handleChange} 
+                  />
+                </div>
+                <button>Submit Form</button>
+              </form>
         </div>
       );
     }
+
     return(
       <div>
-        <h3>Loading</h3>
         <h3>Loading</h3>
         <h3>Loading</h3>
         <h3>Loading</h3>
